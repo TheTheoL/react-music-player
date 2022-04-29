@@ -1,13 +1,22 @@
-import React from 'react';
-import { playAudio } from '../util';
+import React from "react";
+import { playAudio } from "../util";
 
-export default function LibrarySong({ song, songs, setCurrentSong, id, audioRef, isPlaying, setSongs }) {
-
-
+const LibrarySong = ({
+    name,
+    artist,
+    cover,
+    id,
+    setCurrentSong,
+    songs,
+    audioRef,
+    isPlaying,
+    setSongs,
+    active,
+}) => {
     const songSelectHandler = () => {
         const selectedSong = songs.filter((state) => state.id === id);
-        setCurrentSong(selectedSong[0]);
-        //Add active state
+        setCurrentSong({ ...selectedSong[0] });
+        //Set Active in library
         const newSongs = songs.map((song) => {
             if (song.id === id) {
                 return {
@@ -18,22 +27,26 @@ export default function LibrarySong({ song, songs, setCurrentSong, id, audioRef,
                 return {
                     ...song,
                     active: false,
-                }
+                };
             }
         });
         setSongs(newSongs);
-        //check if the song is playing
-        playAudio(isPlaying, audioRef);
 
-    }
+        //Play audio
+        playAudio(isPlaying, audioRef);
+    };
     return (
-        <div onClick={songSelectHandler}
-            className={`library-song ${song.active ? 'selected' : ""}`}>
-            <img src={song.cover} alt={song.name} />
+        <div
+            onClick={songSelectHandler}
+            className={`library-song ${active ? "selected" : ""}`}
+        >
+            <img src={cover} alt="" />
             <div className="song-description">
-                <h3>{song.name}</h3>
-                <h4>{song.artist}</h4>
+                <h3>{name}</h3>
+                <h4>{artist}</h4>
             </div>
-        </div >
-    )
-}
+        </div>
+    );
+};
+
+export default LibrarySong;

@@ -1,18 +1,29 @@
-import React from 'react';
-import LibrarySong from './LibrarySong';
+import React from "react";
 
-export default function Library({ songs, setCurrentSong, audioRef, isPlaying, setSongs, libraryStatus }) {
+import LibrarySong from "./LibrarySong";
+
+const Library = ({
+    songs,
+    setCurrentSong,
+    audioRef,
+    isPlaying,
+    setSongs,
+    libraryStatus,
+}) => {
     return (
-        <div className={`library ${libraryStatus ? 'active-library' : ''}`}>
+        <div className={`library ${libraryStatus ? "active-library" : " "}`}>
             <h2>Library</h2>
-            <div className='library-songs'>
+            <div className="library-songs">
                 {songs.map((song) => (
                     <LibrarySong
                         songs={songs}
-                        setCurrentSong={setCurrentSong}
-                        song={song}
-                        id={song.id}
+                        cover={song.cover}
+                        name={song.name}
+                        artist={song.artist}
+                        active={song.active}
                         key={song.id}
+                        id={song.id}
+                        setCurrentSong={setCurrentSong}
                         audioRef={audioRef}
                         isPlaying={isPlaying}
                         setSongs={setSongs}
@@ -20,5 +31,7 @@ export default function Library({ songs, setCurrentSong, audioRef, isPlaying, se
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
+
+export default Library;
